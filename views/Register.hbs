@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Register</title>
+    <link rel="stylesheet" href="/css/styles.css">
+  </head>
+
+
+
+  <body>
+    <form action="/register" method="POST">
+      <h1>REGISTER</h1>
+
+      {{#if message}}
+
+      <span>{{message}}</span>
+      
+        {{/if}} 
+      <input
+        placeholder="Enter Your Name"
+        type="text"
+        name="username"
+        id="username"
+        required
+      />
+      <input
+        placeholder="Enter Your Email"
+        type="email"
+        name="email"
+        id="email"
+        required
+      />
+      <input
+        placeholder="Enter Your Password"
+        type="password"
+        name="password"
+        id="password"
+        required
+      />
+      <input type="submit" value="REGISTER" />
+    </form>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+form {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="submit"] {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="submit"] {
+  background-color: #007bff;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
