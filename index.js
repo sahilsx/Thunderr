@@ -47,7 +47,7 @@ app.get('/' , (req,res) =>{res.sendFile(path.join(__dirname + "/views/index.html
 
 app.get('/login' , (req,res)=>{res.render('login')})
 app.get("/register", (req, res) => {res.render("register")});
-app.get('/home' ,IsAuthenticated, (req,res)=>{res.render('Home')})
+app.get('/home',(req,res)=>{res.render('Home')})
 
 
 
