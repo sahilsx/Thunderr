@@ -30,8 +30,9 @@ const IsAuthenticated = require("./auth/Auth");
 
 
 //  app.engine('hbs', exphbs.engine({
-//   defaultLayout: 'main',
+//   defaultLayout: 'layout',
 //   extname: '.hbs'
+    
 // }));
 
 app.set('view engine', 'hbs');
@@ -48,7 +49,7 @@ app.get('/' , (req,res) =>{res.sendFile(path.join(__dirname + "/views/index.html
 app.get('/login' , (req,res)=>{res.render('login')})
 app.get("/register", (req, res) => {res.render("register")});
 app.get('/home',(req,res)=>{res.render('Home')})
-
+app.get('/blog',IsAuthenticated,(req,res)=>{res.render('blog')})
 
 
 
