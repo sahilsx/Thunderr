@@ -4,6 +4,19 @@ const JWT = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const secretkey = process.env.Secret_key;
 
+const cloudinary = require("cloudinary").v2;
+require("dotenv").config();
+
+cloudinary.config({
+  cloud_name: process.env.cloud_name,
+  api_key: process.env.api_key,
+  api_secret: process.env.api_secret,
+});
+
+
+
+
+
 const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -75,4 +88,44 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const blog = async (req, res) => {
+  try {
+    const { title, content } = req.body;
+
+    console.log(req.body)
+
+    const id = uuidv4();
+    const image = req.file.path
+
+    console.log(image)
+
+    if(!image){
+      return res.render("blog", { message: "select an image" })
+    }
+
+    const upload = await cloudinary.uploader.upload(image , {
+      folderName : "test"
+    }) 
+
+    const imageUrl =  upload.secure_url
+
+
+
+
+    const values = [id, title, imageUrl, content];
+    const Query = `INSERT INTO blog VALUES (?,?,?,?)`;
+
+    connection.query(Query, values, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(result);
+     
+      res.render("blog", { message: "blog uploaded successfully" });
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { register, login, blog };

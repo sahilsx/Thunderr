@@ -2,13 +2,14 @@ const express =require ("express")
 const mongoose = require ("mongoose")
 const path = require ("path")
 const dbConnect = require("./config/dbconnect");
+const multMidWare = require("./middlewares/multer")
 
 const cookieParser = require("cookie-parser")
 const bodyParser = require("body-parser");
 // const exphbs = require('express-handlebars');
 const port = 4000 
 require("dotenv").config();
-const {register, login} = require("./controllers/TestController");
+const {register, login, blog} = require("./controllers/TestController");
 
 const {registerController, loginController  } = require("./controllers/UserController");
 const {condb} = require("./config/DbConnectsql");
@@ -55,7 +56,7 @@ app.get('/blog',IsAuthenticated,(req,res)=>{res.render('blog')})
 
 app.post("/register", register);
 app.post("/login", login);
-
+app.post("/blog",multMidWare, blog);
 
 
 
