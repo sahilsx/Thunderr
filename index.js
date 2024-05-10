@@ -52,19 +52,19 @@ app.get("/register", (req, res) => {res.render("register")});
 app.get('/home',(req,res)=>{res.render('Home')})
 app.get('/blog',IsAuthenticated,(req,res)=>{res.render('blog')})
 app.get('/profile',IsAuthenticated,(req,res)=>{res.render('myprofile')})
-// app.get('/myblogs',IsAuthenticated,getBlog,(req,res)=>{res.render('myposts')})
+app.get('/myblogs',IsAuthenticated,getBlog,(req,res)=>{res.render('myposts')})
 // app.get('/myblogs',IsAuthenticated,getBlog)
-app.get('/myblogs',IsAuthenticated,getBlog, (req, res) => {
-  // Call your getBlog function to fetch the blog post data
-  getBlog(req.userid)
-    .then(blogPosts => {
-      res.render('myposts', { blogPosts });
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    });
-});
+// app.get('/myblogs',IsAuthenticated, (req, res) => {
+//   // Call your getBlog function to fetch the blog post data
+//   getBlog(req.userid)
+//     .then(blogPosts => {
+//       res.render('myposts', { blogPosts });
+//     })
+//     .catch(err => {
+//       console.error(err);
+//       res.status(500).send('Internal Server Error');
+//     });
+// });
 
 app.post("/register", register);
 app.post("/login", login);

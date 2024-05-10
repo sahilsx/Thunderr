@@ -149,6 +149,7 @@ const getBlog = async (req, res) => {
       }
 
       const blogPosts = result; 
+      res.render("myposts" , {blogPosts});
        console.log(blogPosts)
       
     });
