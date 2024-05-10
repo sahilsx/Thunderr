@@ -46,6 +46,7 @@ const loginController = async (req, res) => {
         console.log(verifyPass)
         if (verifyPass) {
             const token = JWT.sign({ userId: user._Id }, secretkey)
+            console.log(userId)
             res.cookie("token", token, {
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000

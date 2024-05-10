@@ -64,8 +64,10 @@ const login = async (req, res) => {
         console.log(result);
         const verify = await bcrypt.compare(password, result[0].password);
         if (verify) {
-          const token = await JWT.sign({ userId: result[0].userId }, secretkey);
-          res.cookie("token", token, {
+          const token = await JWT.sign({ userId : result[0].id }, secretkey);
+          console.log(result[0].id,{message:"this is userid"} )
+          const userId = result[0].id;
+          res.cookie("token",token, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
@@ -90,6 +92,8 @@ const login = async (req, res) => {
 
 const blog = async (req, res) => {
   try {
+    const userId = req.userid;
+    console.log(userId)
     const { title, content } = req.body;
 
     console.log(req.body)
@@ -112,8 +116,8 @@ const blog = async (req, res) => {
 
 
 
-    const values = [id, title, imageUrl, content];
-    const Query = `INSERT INTO blog VALUES (?,?,?,?)`;
+    const values = [id,userId , title, imageUrl, content];
+    const Query = `INSERT INTO bloger VALUES (?,?,?,?,?)`;
 
     connection.query(Query, values, (err, result) => {
       if (err) {
@@ -128,4 +132,39 @@ const blog = async (req, res) => {
   }
 };
 
-module.exports = { register, login, blog };
+
+const getBlog = async (req, res) => {
+  try {
+    const blogId = req.userid; 
+
+    const query = 'SELECT title, image, content FROM bloger WHERE userId = ?';
+    connection.query(query, [blogId], (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+
+      if (result.length === 0) {
+        return res.status(404).json({ error: 'Blog post not found' });
+      }
+
+      const blogPosts = result; 
+       console.log(blogPosts)
+      
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+module.exports = { register, login, blog, getBlog };

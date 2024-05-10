@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 // const exphbs = require('express-handlebars');
 const port = 4000 
 require("dotenv").config();
-const {register, login, blog} = require("./controllers/TestController");
+const {register, login, blog, getBlog} = require("./controllers/TestController");
 
 const {registerController, loginController  } = require("./controllers/UserController");
 const {condb} = require("./config/DbConnectsql");
@@ -51,13 +51,39 @@ app.get('/login' , (req,res)=>{res.render('login')})
 app.get("/register", (req, res) => {res.render("register")});
 app.get('/home',(req,res)=>{res.render('Home')})
 app.get('/blog',IsAuthenticated,(req,res)=>{res.render('blog')})
-
-
+app.get('/profile',IsAuthenticated,(req,res)=>{res.render('myprofile')})
+// app.get('/myblogs',IsAuthenticated,getBlog,(req,res)=>{res.render('myposts')})
+// app.get('/myblogs',IsAuthenticated,getBlog)
+app.get('/myblogs',IsAuthenticated,getBlog, (req, res) => {
+  // Call your getBlog function to fetch the blog post data
+  getBlog(req.userid)
+    .then(blogPosts => {
+      res.render('myposts', { blogPosts });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    });
+});
 
 app.post("/register", register);
 app.post("/login", login);
-app.post("/blog",multMidWare, blog);
+app.post("/blog",IsAuthenticated,multMidWare, blog);
 
+
+
+
+// app.get('/blogs', IsAuthenticated,async (req, res) => {
+//   const userId = req.userid; // Assuming you have the userId available in the request object
+
+//   try {
+//     const allposts = await Post.find(userId);
+//     res.render('myposts', { blogPosts });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
 
 
 

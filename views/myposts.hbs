@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Posts</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="#" class="logo">My Blog</a>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Posts</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="blog-posts">
+      <h1>My Blog Posts</h1>
+      {{#if blogPosts}}
+        <div class="posts-container">
+          {{#each blogPosts}}
+            <div class="blog-post">
+              <h2>{{this.title}}</h2>
+              <img src="{{this.image}}" alt="Blog Image">
+              <p>{{this.content}}</p>
+            </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <p>No blog posts found.</p>
+      {{/if}}
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 My Blog. All rights reserved.</p>
+  </footer>
+</body>
+</html>
