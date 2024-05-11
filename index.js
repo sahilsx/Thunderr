@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 // const exphbs = require('express-handlebars');
 const port = 4000 
 require("dotenv").config();
-const {register, login, blog, getBlog} = require("./controllers/TestController");
+const {register, login, blog, getBlog, getAllBlog } = require("./controllers/TestController");
 
 const {registerController, loginController  } = require("./controllers/UserController");
 const {condb} = require("./config/DbConnectsql");
@@ -53,6 +53,7 @@ app.get('/home',(req,res)=>{res.render('Home')})
 app.get('/blog',IsAuthenticated,(req,res)=>{res.render('blog')})
 app.get('/profile',IsAuthenticated,(req,res)=>{res.render('myprofile')})
 app.get('/myblogs',IsAuthenticated,getBlog,(req,res)=>{res.render('myposts')})
+app.get('/explore',IsAuthenticated,getAllBlog,(req,res)=>{res.render('explore')})
 // app.get('/myblogs',IsAuthenticated,getBlog)
 // app.get('/myblogs',IsAuthenticated, (req, res) => {
 //   // Call your getBlog function to fetch the blog post data

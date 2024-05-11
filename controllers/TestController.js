@@ -2,6 +2,7 @@ const { connection } = require("../config/DbConnectsql");
 const { v4: uuidv4 } = require("uuid");
 const JWT = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { query } = require("express");
 const secretkey = process.env.Secret_key;
 
 const cloudinary = require("cloudinary").v2;
@@ -160,6 +161,24 @@ const getBlog = async (req, res) => {
 };
 
 
+const getAllBlog = async(req,res)=>{
+const query = 'SELECT * FROM bloger'
+   
+
+connection.query(query,"",(err,result)=>{
+ if(err){
+ console.log(err)
+
+ }
+ const blogAllPosts = result; 
+ res.render("explore" , {blogAllPosts});
+  console.log(blogAllPosts)
+
+})
+
+
+
+}
 
 
 
@@ -167,5 +186,4 @@ const getBlog = async (req, res) => {
 
 
 
-
-module.exports = { register, login, blog, getBlog };
+module.exports = { register, login, blog, getBlog, getAllBlog };
