@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 // const exphbs = require('express-handlebars');
 const port = 4000 
 require("dotenv").config();
-const {register, login, blog, getBlog, getAllBlog } = require("./controllers/TestController");
+const {register, login, blog, getBlog, getAllBlog, myaccount, logout } = require("./controllers/TestController");
 
 const {registerController, loginController  } = require("./controllers/UserController");
 const {condb} = require("./config/DbConnectsql");
@@ -50,10 +50,12 @@ app.get('/' , (req,res) =>{res.sendFile(path.join(__dirname + "/views/index.html
 app.get('/login' , (req,res)=>{res.render('login')})
 app.get("/register", (req, res) => {res.render("register")});
 app.get('/home',(req,res)=>{res.render('Home')})
+app.get('/logout',IsAuthenticated,(req,res)=>{res.render('logout')})
 app.get('/blog',IsAuthenticated,(req,res)=>{res.render('blog')})
 app.get('/profile',IsAuthenticated,(req,res)=>{res.render('myprofile')})
 app.get('/myblogs',IsAuthenticated,getBlog,(req,res)=>{res.render('myposts')})
 app.get('/explore',IsAuthenticated,getAllBlog,(req,res)=>{res.render('explore')})
+app.get('/myaccount',IsAuthenticated,myaccount,(req,res)=>{res.render('account')})
 // app.get('/myblogs',IsAuthenticated,getBlog)
 // app.get('/myblogs',IsAuthenticated, (req, res) => {
 //   // Call your getBlog function to fetch the blog post data
@@ -70,7 +72,7 @@ app.get('/explore',IsAuthenticated,getAllBlog,(req,res)=>{res.render('explore')}
 app.post("/register", register);
 app.post("/login", login);
 app.post("/blog",IsAuthenticated,multMidWare, blog);
-
+app.post("/logout",IsAuthenticated, logout)
 
 
 

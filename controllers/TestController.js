@@ -62,17 +62,22 @@ const login = async (req, res) => {
       }
 
       if (result.length > 0) {
-        console.log(result);
+       
         const verify = await bcrypt.compare(password, result[0].password);
         if (verify) {
           const token = await JWT.sign({ userId : result[0].id }, secretkey);
           console.log(result[0].id,{message:"this is userid"} )
-          const userId = result[0].id;
+          const userId = result[0].id
+          const info=result[0];
+           console.log(info)
+          console.log(info,{message:"data is here"})
           res.cookie("token",token, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
+         
           res.redirect("/home");
+          
         } else {
           res.render("login", {
             message: "Wrong Password! Please try with a valid one.. ",
@@ -182,8 +187,62 @@ connection.query(query,"",(err,result)=>{
 
 
 
+const myaccount = async(req,res)=>{
+const id = req.userid;
+const query = `SELECT * FROM userx WHERE email = ?  `;
+
+connection.query(query, [id],(err,result)=>{
+if(err){
+  console.log(err)
+  return;
+}
+if (result.length === 0) {
+  return res.status(404).json({ error: 'Blog post not found' });
+}
+const account = result; 
+res.render("account" , {account});
+ console.log(account)
 
 
 
 
-module.exports = { register, login, blog, getBlog, getAllBlog };
+})
+
+
+
+}
+
+
+const logout= async (req, res) => {
+  try {
+    const id = req.userid;
+    console.log(id)
+    const query ='SELECT * FROM userx WHERE id =? ';
+    connection.query(query,[id],(err,result)=>{
+    if(err){
+      console.log(err)
+    }
+    console.log(result)
+    if (result.length > 0) {
+      console.log(result)
+      res.clearCookie("token");
+     
+      res.render("logout",{message:"Logout  SuccesFully "})
+    }
+   
+
+
+
+
+
+    })
+    
+
+    
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+module.exports = { register, login, blog, getBlog, getAllBlog, myaccount, logout };
