@@ -189,7 +189,7 @@ connection.query(query,"",(err,result)=>{
 
 const myaccount = async(req,res)=>{
 const id = req.userid;
-const query = `SELECT * FROM userx WHERE email = ?  `;
+const query = `SELECT * FROM userx WHERE id = ?  `;
 
 connection.query(query, [id],(err,result)=>{
 if(err){
